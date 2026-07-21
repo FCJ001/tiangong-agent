@@ -40,6 +40,7 @@ class Settings(BaseSettings):
        # 聊天模型
     BASE_URL_CHAT: str = ""
     DEEPSEEK_API_KEY: str = ""
+    DEEPSEEK_MODEL: str = "deepseek-chat"
     CHAT_MODEL: str = "deepseek-chat"
     EMBEDDING_MODEL: str = "text-embedding-v3"
     VL_MODEL: str = "qwen-vl"

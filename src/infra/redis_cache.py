@@ -16,16 +16,6 @@ redis_pool = redis.ConnectionPool(
 # 模块级别创建 Redis 客户端实例（复用连接池）; _ 开头认为是 私有变量，不暴露出去
 _redis_client = redis.Redis(connection_pool=redis_pool)
 
-# 通用的 Redis 客户端获取函数
-async def get_redis_client() -> redis.Redis:
-    """
-    FastAPI Depends 注入用。
-    直接返回模块级别的 Redis 客户端实例，不需要每次创建新实例。
-    连接池会自动管理连接的获取和归还。
-    """
-    return _redis_client
-
-
 # RedisSaver（checkpointer）专用连接池：必须 decode_responses=False（bytes 模式）
 # 与业务连接池共享相同的地址配置，但保持独立的连接池，互不干扰
 _checkpointer_pool = redis.ConnectionPool(
@@ -36,8 +26,17 @@ _checkpointer_pool = redis.ConnectionPool(
     decode_responses=False,  # RedisSaver 要求 bytes，不能 decode
 )
 
-# 短期记忆专用
 _checkpointer_client = redis.Redis(connection_pool=_checkpointer_pool)
+
+
+async def get_redis_client() -> redis.Redis:
+    """
+    FastAPI Depends 注入用。
+    直接返回模块级别的 Redis 客户端实例，不需要每次创建新实例。
+    连接池会自动管理连接的获取和归还。
+    """
+    return _redis_client
+
 
 def get_checkpointer_redis() -> redis.Redis:
     """
