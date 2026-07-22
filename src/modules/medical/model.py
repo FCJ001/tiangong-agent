@@ -200,10 +200,10 @@ class Patient(BaseModel):
 class Consultation(BaseModel):
     __tablename__ = "consultations"
 
-    patient_id: Mapped[int] = mapped_column(
+    patient_id: Mapped[int | None] = mapped_column(
         ForeignKey("patients.id", ondelete="CASCADE"),
-        nullable=False,
-        comment="患者 ID"
+        nullable=True,
+        comment="患者 ID（非登录用户可为空）"
     )
     department_id: Mapped[int | None] = mapped_column(
         ForeignKey("departments.id", ondelete="SET NULL"),

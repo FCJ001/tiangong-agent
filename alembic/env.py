@@ -11,6 +11,8 @@ from src.core.config import get_settings
 
 # 这里要导入所有模型模块，确保 metadata 收集到全部表
 # 示例：from src.modules.user.model import User
+from src.modules.medical.model import *
+from src.agents.knowledge.model import *
 
 config = context.config
 

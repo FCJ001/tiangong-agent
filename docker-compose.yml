@@ -137,9 +137,11 @@ services:
     container_name: tiangong-attu
     image: zilliz/attu:latest
     environment:
-      MILVUS_URL: 172.25.112.1:19530
+      MILVUS_URL: milvus:19530
     ports:
       - "3000:3000"
+    networks:
+      - tiangong-net
     depends_on:
       - "milvus"
   # ----------------------------------------------------------
