@@ -58,7 +58,7 @@ KNOWLEDGE_SYSTEM_PROMPT = """你是天宫医疗的知识问答助手，面向医
 
 def _build_deps(db_session=None, user_id="anonymous", role="patient") -> KnowledgeDeps:
     llm = ChatDeepSeek(
-        model=settings.DEEPSEEK_MODEL,
+        model=settings.CHAT_MODEL,
         api_key=settings.DEEPSEEK_API_KEY,
         temperature=0.3,
     )
@@ -86,7 +86,7 @@ def create_knowledge_agent(db_session=None, user_id="anonymous", role="patient")
     deps = _build_deps(db_session, user_id, role)
     tools = build_knowledge_tools(deps)
     llm = ChatDeepSeek(
-        model=settings.DEEPSEEK_MODEL,
+        model=settings.CHAT_MODEL,
         api_key=settings.DEEPSEEK_API_KEY,
         temperature=0.3,
     )
